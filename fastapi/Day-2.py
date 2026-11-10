@@ -16,9 +16,17 @@ def get_employees():
 '''
 Task 2 — Search employees by department
 '''
+@app.get("/employees/department/{department}")
+def search_employees(department:str):
+    result = []
+    for emp in employees:
+        if emp["department"].lower() == department.lower():
+            result.append(emp)
+    return result
 
-
-
+'''
+Task 3 — Use a function to calculate average salary
+'''
 
 
 
