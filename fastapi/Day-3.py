@@ -78,15 +78,51 @@ def get_employee(employee_id:int):
 Task 4 — Create a generator-based streaming API
 Requirement: Return a large dataset gradually instead of building a complete list first.
 '''
+from fastapi import FastAPI
+from fastapi.responses import StreamingResponse
 
+app = FastAPI()
 
+def generate_numbers():
+    for number in range(1,101):
+        yield f"{number}\n"
 
+@app.get("/numbers")
+def get_numbers():
+    return StreamingResponse(
+        generate_numbers(),
+        media_type = "text/plain"
+    )
 
+'''
+Task 5 — Create a decorator for API execution logging
+Requirement: Log the execution time of an API endpoint.
+'''
+import time
+from functools import wraps
+from fastapi import FastAPI
 
+app = FastAPI()
 
+def log_execution(func):
+        @wraps(func)
+        async def wrapper(*args,**kwargs):
+            start = time.perf_counter()
 
+            try:
+                return await func(*args,**kwargs)
+            finally:
+                end = time.perf_counter()
 
+                print(
+                    "Execution time:", end - start
+                )
+        return wrapper
 
+@app.get("/reports")
+@log_execution
+async def get_reports():
+    return {"message":"Reports generated"}
 
 
 
