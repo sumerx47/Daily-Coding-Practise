@@ -48,12 +48,11 @@ WHERE d.department_name = 'IT';
 -- Query 3 — Find the total number of employees in each department.
 SELECT d.department_name, COUNT(e.id) AS total_employees
 FROM departments d
-LEFT JOIN employee d
+LEFT JOIN employees e
 ON d.id = e.department_id
 GROUP BY d.id, department_name;
 
 -- Query 4 — Find departments having more than one employee.
-
 
 
 
