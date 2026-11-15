@@ -53,17 +53,54 @@ ON d.id = e.department_id
 GROUP BY d.id, department_name;
 
 -- Query 4 — Find departments having more than one employee.
+SELECT department_id, COUNT(*) AS total_employees
+FROM employees
+GROUP BY department_id
+HAVING COUNT(*) > 1;
+
+-- Query 5 — Find employees earning more than the company average salary.
+SELECT name, salary
+FROM employees
+WHERE salary > (
+		SELECT AVG(salary)
+		FROM employees
+);
+
+-- Query 6 — Find the highest-paid employee in each department.
+SELECT name,department_id.salary
+FROM(
+	SELECT name,department_id,salary,
+	DENSE_RANK() OVER(
+		PARTITION BY department_id 
+		ORDER BY salary DESC		
+	) AS ranking
+   FROM employees
+) ranked
+WHERE ranking = 1;
 
 
+-- Query 7 — Use a CTE to calculate department average salary.
+WITH departmnet_salary AS(
+	SELECT 
+		department_id,
+		AVG(salary) AS average_salary
+	FROM employees
+	GROUP BY department_id
+)
+SELECT 
+	d.department_name,
+	ds.average_salary
+FROM departmnet_salary ds
+JOIN departments d
+ON ds.department_id = d.id;
 
-
-
-
-
-
-
-
-
+-- Query 8 — Find employees who earn the highest salary in the company.
+SELECT name,salary
+FROM employees
+WHERE salary = (
+	SELECT MAX(salary)
+	FROM employees
+);
 
 
 
