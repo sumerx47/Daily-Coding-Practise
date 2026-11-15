@@ -1,19 +1,10 @@
-   self.employees = {
-            1: "Ali",
-            2: "John"
-        }  
-    def get_employee(self, employee_id):
-        if employee_id not in self.employees:
-            raise HTTPException(
-                status_code = 404,
-                detail = "Employee not found"
-            )
-        return self.employees[employee_id]
-service = EmployeeService()
+@app.get("/employees/filter")
+def filter_employees(min_salary: int):
+    result = []
 
-@app.get("employees/{employee_id}")
-def get_employee(employee_id:int):
+    for employee in employees:
+        if employee["salary"] >= min_salary:
+            result.append(employee)
 
-    name = service.get_employee(employee_id)
+    return result
 
-    return {"name": name}
