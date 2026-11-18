@@ -111,11 +111,82 @@ def delete_employees(employee_id :int):
     )
 
 
+'''
+Task 4 — Implement PATCH for partial updates
+'''
+from pydantic import BaseModel
+
+class EmployeeUpdate(BaseModel):
+    name : str | None = None
+    salary : int | None = None
+    department : str | None = None
+
+@app.patch("/employees/{employee_id}")
+def patch_employee(employee_id : int, updated: EmployeeUpdate):
+    for emp in employees:
+        if emp["id"] == employee_id:
+            changes = updated.model_dump(exclude_unset = True)
+            emp.update(changes)
+            return emp
+
+    raise HTTPException(
+        status_code=404,
+        detail = "employee not found"
+    )
 
 
+'''
+Task 5 — Connect CRUD endpoints to PostgreSQL
+'''
+from sqlalchemy import create_engine
+
+DATABASE_URL = (
+    "postgresql+psycopg2://postgres:password@localhost:5432/company"
+)
+
+engine = create_engine(DATABASE_URL)
 
 
+'''-------------------------------------------------'''
 
+from sqlalchemy import text
+from fastapi import HTTPException
+
+@app.get("/db/employees")
+def get_database_employees():
+    query = text("SELECT * FROM employees")
+
+    with engine.connect() as connection:
+        result = connection.execute(query)
+
+        return [
+            dict(row._mapping)
+            for row in result
+        ]
+    
+@app.get("/db/employees/{employee_id}")
+def get_database_employee(employee_id: int):
+    query = text("""
+        SELECT *
+        FROM employees
+        WHERE id = :employee_id
+    """)
+
+    with engine.connect() as connection:
+        result = connection.execute(
+            query,
+            {"employee_id": employee_id}
+        )
+
+        row = result.fetchone()
+
+        if row is None:
+            raise HTTPException(
+                status_code=404,
+                detail="Employee not found"
+            )
+
+        return dict(row._mapping)   
 
 
 
