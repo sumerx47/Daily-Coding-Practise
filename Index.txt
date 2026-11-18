@@ -1,0 +1,42 @@
+Day 1 — Python logic + fundamentals 8 hours
+Python coding patterns, data types, conditions, loops, strings, lists
+4h Python · 2h SQL · 2h revision
+
+
+Day 2 — Python collections + functions 8 hours
+Lists, tuples, dictionaries, sets, functions, lambda, comprehensions
+5h Python · 2h SQL · 1h revision
+
+
+Day 3 — Advanced/core Python 8 hours
+Exceptions, files, modules, OOP, iterators, generators, decorators
+5h Python · 2h SQL · 1h revision
+
+
+Day 4 — PostgreSQL intensive 
+8 hours
+SELECT, WHERE, JOIN, GROUP BY, HAVING, subqueries, CTEs, indexes
+3h Python · 4h SQL · 1h revision
+
+
+Day 5 — FastAPI fundamentals 8 hours
+Routes, methods, Pydantic, validation, status codes, CRUD, Swagger
+2h Python · 2h SQL · 4h FastAPI
+
+
+Day 6 — FastAPI advanced + integration 8 hours
+PostgreSQL integration, SQLAlchemy, authentication, JWT, dependencies, testing
+1h Python · 2h SQL · 5h FastAPI
+
+
+Day 7 — Projects + mock interviews 8 hours
+Build, debug, explain code, SQL test, Python test, FastAPI interview
+2h Python · 2h SQL · 3h FastAPI · 1h mock
+
+
+
+
+
+
+
+
