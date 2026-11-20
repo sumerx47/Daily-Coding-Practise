@@ -80,15 +80,15 @@ def get_employees():
 @app.get("/employees/{employee_id}")
 def get_employee(employee_id : int):
     for emp in employees:
-        if emp["id"] == employee_id
-        return emp
+        if emp["id"] == employee_id:
+            return emp
     raise HTTPException(
-        status_code = 404
+        status_code = 404,
         detail = "Employee not found"
     )
 
 @app.put("/employees/{employee_id}")
-def update_employees(employee_id : int , updated :Employee)
+def update_employees(employee_id : int , updated :Employee):
     for emp in employees:
         if emp["id"] == employee_id:
             emp.update(updated.model_dump())
